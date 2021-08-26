@@ -44,22 +44,7 @@ class lynkco_app_request():
         response = requests.get(self.__host + '/auth/login/verifycode/image', params = params, data = {}, auth = self.__lynco_api_auth, proxies = {});
         return response.json()
     def get_verify_code_str(self, imgdata):
-        sysstr = platform.system()
-        file_dir = ""
-        file_path = ""
-        if(sysstr == 'Windows'):
-            file_dir = os.getcwd() + "\\com\\image"
-            file_path = file_dir + "\\0.jpg"
-        else:
-            file_dir = os.getcwd() + "/com/image"
-            file_path = file_dir + "/0.jpg"
-        if not os.path.exists(file_dir):
-            os.mkdir(file_dir)
-        with open(file_path, 'wb') as f:
-            f.write(base64.b64decode(imgdata))
         ocr = ddddocr.DdddOcr()
-        with open(file_path, 'rb') as f:
-            img_bytes = f.read()
-        res = ocr.classification(img_bytes)
+        res = ocr.classification(base64.b64decode(imgdata))
         print("验证码:"+res)
         return res

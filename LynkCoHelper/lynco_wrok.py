@@ -42,11 +42,11 @@ class lynco_wrok(threading.Thread):
                 time.sleep(1)
                 response = self.lynkco_app_request.login(self.account['username'], self.AES.encrypt(self.account['password']))
                 if response['code'] != 'success':
-                    print("APP端操作用户：" + self.account['username'] + "失败，第"+i+2+"次登录失败:"+ response['message'] + time.strftime('%Y-%m-%d %H:%M:%S'))
+                    print("APP端操作用户：" + self.account['username'] + "失败，第"+str(i+2)+"次登录失败:"+ response['message'] + time.strftime('%Y-%m-%d %H:%M:%S'))
                 else:
                     loginSuccess = True
                     break
-            if loginSuccess == False:
+            if not loginSuccess:
                 return False
         self.userinfo = response['data']
 
